@@ -55,6 +55,7 @@ namespace TP3
 
                         //Este retorno es al pedo, sirve para agregarlo en la cola si esta ocupado
                         ClienteTemporal clienteTemporal = SetObjetoTemporal("Atendido", fila1.reloj);
+                        Cola(clienteTemporal, i);
                         break;
                     }
                     else
@@ -63,15 +64,7 @@ namespace TP3
                         ClienteTemporal clienteTemporal = SetObjetoTemporal("Esperando", 0.0);
 
                         fila1.cola[i].cantidad.Add(clienteTemporal);
-                        
-
-                        //****************************************************************************
-
-                        //La acumulacion y promedio del tiempo se calculan en la futura funcion Cola()
-                        //vamos a hacer que cada vez que se ejecuta Cola(), revise si tiene ojbetos esperando
-
-                        //****************************************************************************
-
+                    
                     }
 
                 }
@@ -138,21 +131,18 @@ namespace TP3
             }
         }
 
-        public void Cola()
+        public void Cola(ClienteTemporal clienteTemporal, int i)
         {
-            
-            for(int i = 0; i < fila1.cola[i]; i++)
-            {
-                //Cada vez que re realice la funcion Cola() vamos a reiniciar los valores de tiempo espera de cada cola
-                //esto es para que siempre contenga 
-                if (fila1.cola[i] != null)
-                {
-                    for(int j = 0; j < fila1.cola[i].Count; j++)
-                    {
-                        fila1.cola[i].tiempoEspera += (fila1.reloj - fila1.cola[i].cantidad[i].inicioAtencion);
-                    }
-                }
-            }
+            //******************************************************************************************
+
+            //El tiempo de espera solo se acumula cuando un objeto empieza a ser atendido
+
+            //******************************************************************************************
+
+            //Remove va a borrar el objeto que coloque?
+            fila1.cola[i].cantidad.Remove(clienteTemporal);
+            fila1.cola[i].tiempoEspera += fila1.reloj - clienteTemporal.inicioAtencion;
+            fila1.cola[i].PRCtiempoFuera = (fila1.cola[i].tiempoEspera / fila1.reloj) * 100;
         }
 
     }
