@@ -8,7 +8,7 @@ namespace TP3
 {
     internal class Cola
     {
-        public int cantidad = 0;
+        public List<ClienteTemporal> cantidad;
         public double tiempoEspera = 0;
         //Porcentaje Tiempo Fuera
         public double PRCtiempoFuera;

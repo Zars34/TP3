@@ -53,19 +53,22 @@ namespace TP3
                     {
                         fila1.estados[i][j] = "Ocupado";
 
-                        SetObjetoTemporal("Atendido", fila1.reloj);
+                        //Este retorno es al pedo, sirve para agregarlo en la cola si esta ocupado
+                        ClienteTemporal clienteTemporal = SetObjetoTemporal("Atendido", fila1.reloj);
                         break;
                     }
                     else
                     {
                         //Si no hay ninguno libre, tiene que esperar
-                        SetObjetoTemporal("Esperando", 0.0);
+                        ClienteTemporal clienteTemporal = SetObjetoTemporal("Esperando", 0.0);
 
-                        fila1.cola[i].cantidad += 1;
+                        fila1.cola[i].cantidad.Add(clienteTemporal);
+                        
 
                         //****************************************************************************
 
                         //La acumulacion y promedio del tiempo se calculan en la futura funcion Cola()
+                        //vamos a hacer que cada vez que se ejecuta Cola(), revise si tiene ojbetos esperando
 
                         //****************************************************************************
 
@@ -100,7 +103,7 @@ namespace TP3
         }
 
         //Aqui creamos al objeto temporal 
-        public void SetObjetoTemporal(string estado, double inicioAtencion)
+        public ClienteTemporal SetObjetoTemporal(string estado, double inicioAtencion)
         {
             ClienteTemporal clienteTemporal = new ClienteTemporal(estado, inicioAtencion);
 
@@ -108,6 +111,7 @@ namespace TP3
             if (fila1.estadoClientes == null)
             {
                 fila1.estadoClientes.Add(clienteTemporal);
+                return clienteTemporal;
             } else {
 
                 //****************************************************************************
@@ -123,12 +127,31 @@ namespace TP3
                     {
                         fila1.estadoClientes[i].estado = estado;
                         fila1.estadoClientes[i].inicioAtencion = inicioAtencion;
+                        return clienteTemporal;
                     }
-                    break;
+                    
                 }
                 //Si tiene objetos temporales pero todos estan llenos, asi que crea uno nuevo
                 fila1.estadoClientes.Add(clienteTemporal);
+                return clienteTemporal;
 
+            }
+        }
+
+        public void Cola()
+        {
+            
+            for(int i = 0; i < fila1.cola[i]; i++)
+            {
+                //Cada vez que re realice la funcion Cola() vamos a reiniciar los valores de tiempo espera de cada cola
+                //esto es para que siempre contenga 
+                if (fila1.cola[i] != null)
+                {
+                    for(int j = 0; j < fila1.cola[i].Count; j++)
+                    {
+                        fila1.cola[i].tiempoEspera += (fila1.reloj - fila1.cola[i].cantidad[i].inicioAtencion);
+                    }
+                }
             }
         }
 
