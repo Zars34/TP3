@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\franc\\OneDrive\\Escritorio\\TP3\\TP3.csproj",
+      "projectUniqueName": "C:\\Users\\franc\\Source\\Repos\\TP3\\TP3\\TP3.csproj",
       "projectName": "TP3",
-      "projectPath": "C:\\Users\\franc\\OneDrive\\Escritorio\\TP3\\TP3.csproj",
+      "projectPath": "C:\\Users\\franc\\Source\\Repos\\TP3\\TP3\\TP3.csproj",
       "packagesPath": "C:\\Users\\franc\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\franc\\OneDrive\\Escritorio\\TP3\\obj\\",
+      "outputPath": "C:\\Users\\franc\\Source\\Repos\\TP3\\TP3\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\franc\\AppData\\Roaming\\NuGet\\NuGet.Config",
