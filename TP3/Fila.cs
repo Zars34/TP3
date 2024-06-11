@@ -79,12 +79,17 @@ namespace TP3
             }
 
 
-            List<int> medias = new List<int>{2,5,10,15,6};
-            for (int i = 0; i < medias.Count; i++)
+            List<int> mediasLlegada = new List<int>{2,5,10,15,6};
+            for (int i = 0; i < mediasLlegada.Count; i++)
             {
-                llegada[i].media = medias[i];
+                llegada[i].media = mediasLlegada[i];
             }
 
+            List<int> mediasFin = new List<int> {6, 12, 20, 30, 15, 3}
+            for(int i = 0; i < mediasFin.Count; i++)
+            {
+                fin[i].media = mediasFin[i];
+            } 
 
         }
     }

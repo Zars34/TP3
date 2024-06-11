@@ -5,6 +5,8 @@ namespace TP3
         public Form1()
         {
             InitializeComponent();
+            GestorFilas gestor;
+            gestor.Inicio();
         }
     }
 }
