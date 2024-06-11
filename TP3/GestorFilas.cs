@@ -19,25 +19,11 @@ namespace TP3
             fila1.evento = "Inicializar";
             fila1.reloj = 0;
 
-            //Llegada Servicio Especial
-            LlegadaServicioEspecial();
-
-            //Llegada
-            Llegada();
-
-            //Fin Servicio Especial
-            FinServicioEspecial();
-
-            //Fin
-            FinLlegada();
- 
-
         }
 
         //Este genera una llegada, creando el timepo del evento
         public void GenerarLlegada(int i)
         {
-            
                 Random random = new Random();
 
                 // Generar un número decimal aleatorio entre 0.01 y 0.99
@@ -58,14 +44,23 @@ namespace TP3
         //Este va a comenzar cuando llegue el tiempo de la llamada
         public void ComienzaLlegada(int i)
         {
-            ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0);
-            Cola(clienteTemporal, i);
+            LlegadaEspecial();
 
+            //Si no hay llegada especial, el cliente se crea en este momento
+            //De lo contrario, se crea en la llegada especial
+            if (fila1.servicioAdicional[0].tomaServicio = false)
+            {
+                ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0);
+                Cola(clienteTemporal, i);
+            }
+
+            //El fin de la llegada normal se realiza lo mismo
             GenerarFin(int i);
+
         }
 
         //Revisa si al comienzo el cliente quiere realizar el servicio especial o no
-        /*public void LlegadaEspecial()
+        public void LlegadaEspecial()
         {
                 Random random = new Random();
 
@@ -75,58 +70,68 @@ namespace TP3
                 // Redondear a dos decimales
                 numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
 
+                //Usamos el indice 0 porque es el que se utiliza para la llegada (el 1 se refiere a la salida que se hace luego)
                 fila1.servicioAdicional[0].RND = numeroDecimalAleatorio;
 
                 if (fila1.servicioAdicional[0].RND < 0.18)
                 {
                     fila1.servicioAdicional[0].tomaServicio = true;
-
-                    LlegadaServicioEspecial();
-                
+                    ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0);
+                    Cola(clienteTemporal, i);
+                GenerarFinServicioEspecial(ClienteTemporal clienteTemporal);
                 }
                 else
                 {
                     fila1.servicioAdicional[0].tomaServicio = false;
                 }
             
-        }*/
+        }
 
-        /*public void LlegadaServicioEspecial()
+        public void GenerarFinServicioEspecial(ClienteTemporal clienteTemporal)
         {
-            
-             
-
-            //El 5 tiene los estados de los serviciosEspeciales
-            for (int j = 0; j < fila1.estados[5].Count; j++)
+            for(int i = 0, i < fila1.fin[6].finAtencion.Count, i++)
             {
-                //Si hay al menos uno libre, lo toma
-                if (fila1.estados[5][j] == "Libre")
+                if (fila1.fin[6].finAtencion[i] == 0)
                 {
-                    fila1.estados[5][j] = "Ocupado";
+                    int index = fila1.estadoClientes.IndexOf(clienteTemporal);
+                    fila1.estadoClientes[index].estado = atendido;
+                    fila1.estadoClientes[index].inicioAtencion = fila1.reloj;
+                   
 
-                    //Este retorno es al pedo, sirve para agregarlo en la cola si esta ocupado
-                    ClienteTemporal clienteTemporal = SetObjetoTemporal("Atendido", fila1.reloj);
-                    Cola(clienteTemporal, 5);
-                    break;
+                    Random random = new Random();
+
+                    // Generar un número decimal aleatorio entre 0.01 y 0.99
+                    double numeroDecimalAleatorio = random.NextDouble() * (0.99 - 0.01) + 0.01;
+
+                    // Redondear a dos decimales
+                    numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
+
+                    fila1.fin[6].RND = numeroDecimalAleatorio;
+                    fila1.fin[6].tiempo = -fila1.fin[i].media * Math.Log(1 - numeroDecimalAleatorio);
+                    fila1.fin[6].finAtencion = fila1.reloj + fila1.fin[6].tiempo;
+                    fila1.fin[6].ACTiempoAtencion += fila1.fin[6].tiempo;
+                    fila1.fin[6].PRCOcupacion = (fila1.fin[6].ACTiempoAtencion / fila1.reloj) * 100;
                 }
-                else
-                {
-                    //Si no hay ninguno libre, tiene que esperar
-                    ClienteTemporal clienteTemporal = SetObjetoTemporal("Esperando", 0.0);
-
-                    fila1.cola[5].cantidad.Add(clienteTemporal);
-
-                }
-
             }
-        }*/
+            
+
+
+        }
+
+        public void ComienzoFinEspecial()
+        {
+            ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0);
+            //Esta cola es especial para Servicios Adicionales
+            Cola(clienteTemporal, 6);
+        }
+
+        
 
 
         //Revisa si al final el cliente quiere realizar el servicio especial o no
-        /*public void FinEspecial()
+        public void FinEspecial()
         {
             Random random = new Random();
-            //aaaa
 
             // Generar un número decimal aleatorio entre 0.01 y 0.99
             double numeroDecimalAleatorio = random.NextDouble() * (0.99 - 0.01) + 0.01;
@@ -140,15 +145,12 @@ namespace TP3
             {
                 fila1.servicioAdicional[1].tomaServicio = true;
 
-                
-
-                //FinLlegada(5, nroColumna??);
             }
             else
             {
                 fila1.servicioAdicional[1].tomaServicio = false;
             }
-        }*/
+        }
 
 
         //Aqui creamos al objeto temporal 
@@ -190,6 +192,11 @@ namespace TP3
 
                     fila1.fin[i].clienteTemporal = clienteTemporal;
 
+                    //Modifica el objeto temporal al que hace referencia
+                    int index = fila1.estadoClientes.IndexOf(clienteTemporal);
+                    fila1.estadoClientes[index].estado = clienteTemporal.estado;
+                    fila1.estadoClientes[index].inicioAtencion = clienteTemporal.inicioAtencion;
+
                     Random random = new Random();
 
                     // Generar un número decimal aleatorio entre 0.01 y 0.99
@@ -202,7 +209,7 @@ namespace TP3
                     fila1.fin[i].tiempo = -fila1.fin[i].media * Math.Log(1 - numeroDecimalAleatorio);
                     fila1.fin[i].finAtencion[j] = fila1.reloj + fila1.fin[i].tiempo;
                     fila1.fin[i].ACTiempoAtencion += fila1.fin[i].tiempo;
-                    fila1.fin[i].PRCOcupacion = fila1.fin[i].ACTiempoAtencion / fila1.reloj;
+                    fila1.fin[i].PRCOcupacion = (fila1.fin[i].ACTiempoAtencion / fila1.reloj) * 100;
                     return;
                 }
             }
