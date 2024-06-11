@@ -34,7 +34,8 @@ namespace TP3
 
         }
 
-        public void Llegada(int i)
+        //Este genera una llegada, creando el timepo del evento
+        public void GenerarLlegada(int i)
         {
             
                 Random random = new Random();
@@ -50,33 +51,21 @@ namespace TP3
                 fila1.llegada[i].proxLlegada = fila1.reloj + fila1.llegada[i].tiempo;
 
                 //Cuando llega un objeto revisa en los estados si hay alguna cola libre
-                for (int j = 0; j < fila1.estados[i].Count; j++)
-                {
-                    //Si hay al menos uno libre, lo toma
-                    if (fila1.estados[i][j] == "Libre")
-                    {
-                        fila1.estados[i][j] = "Ocupado";
+                
 
-                        //Este retorno es al pedo, sirve para agregarlo en la cola si esta ocupado
-                        ClienteTemporal clienteTemporal = SetObjetoTemporal("Atendido", fila1.reloj);
-                        Cola(clienteTemporal, i);
-                        break;
-                    }
-                    else
-                    {
-                        //Si no hay ninguno libre, tiene que esperar
-                        ClienteTemporal clienteTemporal = SetObjetoTemporal("Esperando", 0.0);
+        }
 
-                        fila1.cola[i].cantidad.Add(clienteTemporal);
-                    
-                    }
+        //Este va a comenzar cuando llegue el tiempo de la llamada
+        public void ComienzaLlegada(int i)
+        {
+            ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0);
+            Cola(clienteTemporal, i);
 
-                }
-            
+            GenerarFin(int i);
         }
 
         //Revisa si al comienzo el cliente quiere realizar el servicio especial o no
-        public void LlegadaEspecial()
+        /*public void LlegadaEspecial()
         {
                 Random random = new Random();
 
@@ -100,12 +89,12 @@ namespace TP3
                     fila1.servicioAdicional[0].tomaServicio = false;
                 }
             
-        }
-        public void LlegadaServicioEspecial()
+        }*/
+
+        /*public void LlegadaServicioEspecial()
         {
-            /*
-             Colocar calculo de cada llegadaEspecial
-             */
+            
+             
 
             //El 5 tiene los estados de los serviciosEspeciales
             for (int j = 0; j < fila1.estados[5].Count; j++)
@@ -130,10 +119,11 @@ namespace TP3
                 }
 
             }
-        }
+        }*/
+
 
         //Revisa si al final el cliente quiere realizar el servicio especial o no
-        public void FinEspecial()
+        /*public void FinEspecial()
         {
             Random random = new Random();
             //aaaa
@@ -150,10 +140,7 @@ namespace TP3
             {
                 fila1.servicioAdicional[1].tomaServicio = true;
 
-                /*
-                 Hay que determinar como enviar la columna a la que queremos que se asigne el proximo
-                tiempo de fin
-                 */
+                
 
                 //FinLlegada(5, nroColumna??);
             }
@@ -161,7 +148,7 @@ namespace TP3
             {
                 fila1.servicioAdicional[1].tomaServicio = false;
             }
-        }
+        }*/
 
 
         //Aqui creamos al objeto temporal 
@@ -169,36 +156,10 @@ namespace TP3
         {
             ClienteTemporal clienteTemporal = new ClienteTemporal(estado, inicioAtencion);
 
-            //Revisa si hay objetos temporales; si no hay ninguno, crea el primero
-            if (fila1.estadoClientes == null)
-            {
-                fila1.estadoClientes.Add(clienteTemporal);
-                return clienteTemporal;
-            } else {
+            fila1.estadoClientes.Add(clienteTemporal);
 
-                //****************************************************************************
-
-                //Si tiene objetos temporales, asi que va a revisar si alguno esta vacío (Hay que impementar que se ponga vacio una vez 
-                //que muera el objeto temporal)
-
-                //****************************************************************************
-
-                for (int i = 0; i < fila1.estadoClientes.Count; i++)
-                {
-                    if (fila1.estadoClientes[i].estado == "")
-                    {
-                        fila1.estadoClientes[i].estado = estado;
-                        fila1.estadoClientes[i].inicioAtencion = inicioAtencion;
-                        return clienteTemporal;
-                    }
-                    
-                }
-                //Si tiene objetos temporales pero todos estan llenos, asi que crea uno nuevo
-                fila1.estadoClientes.Add(clienteTemporal);
-                return clienteTemporal;
-
-            }
-        }
+            return clienteTemporal;
+         }
 
         public void Cola(ClienteTemporal clienteTemporal, int i)
         {
@@ -217,33 +178,49 @@ namespace TP3
         }
 
 
-        //Aqui es donde se realiza el Fin de una llegada; solo tenemos que indicar a que llegada
-        //ser refiere (lo que hace en cuanto llega una llamada como evento) y el numero de la cola
-        //al que esté asignada la llamada
-        public void FinLlegada(int i, int nroCola)
+        public void GenerarFin(int i, ClienteTemporal clienteTemporal)
         {
-
-            Random random = new Random();
-
-            // Generar un número decimal aleatorio entre 0.01 y 0.99
-            double numeroDecimalAleatorio = random.NextDouble() * (0.99 - 0.01) + 0.01;
-
-            // Redondear a dos decimales
-            numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
-
-            fila1.fin[i].RND = numeroDecimalAleatorio;
-            fila1.fin[i].tiempo = -fila1.fin[i].media * Math.Log(1 - numeroDecimalAleatorio);
-            fila1.fin[i].ACTiempoAtencion += fila1.fin[i].tiempo;
-            fila1.fin[i].PRCOcupacion = fila1.fin[i].ACTiempoAtencion / fila1.reloj;
-
-
-            if (fila1.fin[i].finAtencion[nroCola - 1] = null)
+            //Va a buscar si uno de los servicios esta desocupado
+            for(int j = 0; j < fila1.fin[i].finAtencion.Count; j++)
             {
-                fila1.fin[i].finAtencion[nroCola - 1] = fila1.reloj + fila1.fin[i].finAtencion[nroCola - 1].tiempo;
+                if (fila1.fin[i].finAtencion[j] == 0)
+                {
+                    clienteTemporal.estado = "Atendiendo";
+                    clienteTemporal.inicioAtencion = fila1.reloj;
+
+                    fila1.fin[i].clienteTemporal = clienteTemporal;
+
+                    Random random = new Random();
+
+                    // Generar un número decimal aleatorio entre 0.01 y 0.99
+                    double numeroDecimalAleatorio = random.NextDouble() * (0.99 - 0.01) + 0.01;
+
+                    // Redondear a dos decimales
+                    numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
+
+                    fila1.fin[i].RND = numeroDecimalAleatorio;
+                    fila1.fin[i].tiempo = -fila1.fin[i].media * Math.Log(1 - numeroDecimalAleatorio);
+                    fila1.fin[i].finAtencion[j] = fila1.reloj + fila1.fin[i].tiempo;
+                    fila1.fin[i].ACTiempoAtencion += fila1.fin[i].tiempo;
+                    fila1.fin[i].PRCOcupacion = fila1.fin[i].ACTiempoAtencion / fila1.reloj;
+                    return;
+                }
             }
 
         }
 
+        //Esta funcion determina el comienzo del evento fin
+        public void ComienzaFin(int i)
+        {
+            //Va a buscar entre los clientes temporales aquel que pertenezca al fin que comienza
+            fila1.estadoClientes.Remove(fila1.fin[i].clienteTemporal);
+
+            /***********************************************************************************
+             
+             Aqui es donde se revisaria si el cliente quiere revisar el servicio adicional o no
+
+             ************************************************************************************/
+        }
 
 
     }
