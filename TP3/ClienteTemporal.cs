@@ -10,11 +10,13 @@ namespace TP3
     {
         public string estado;
         public double inicioAtencion;
+        public int id;
         
-        public ClienteTemporal(string estado, double inicioAtencion)
+        public ClienteTemporal(string estado, double inicioAtencion, int id)
         {
             this.estado = estado;   
             this.inicioAtencion = inicioAtencion;
+            this.id = id;
         }
     }
 }

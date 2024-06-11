@@ -11,6 +11,7 @@ namespace TP3
     {
         public Fila fila1;
         public Fila fila2;
+        public Random random;
 
 
         public void Inicio()
@@ -19,13 +20,27 @@ namespace TP3
             fila1.evento = "Inicializar";
             fila1.reloj = 0;
 
+
+            /*
+             Entonces, por cada fila el orden seria:
+
+            - GenerarLlegada(numero de evento): Genera una nueva llegada
+
+            - ComienzaLlegada(numero de evento, que seria el que gane el reloj): Revisa si realiza una llegada
+            especial; se genera el objeto sin importar, se realiza o no la llegada especial, luego pasa o vuelve a la llegada normal
+            que genera un fin
+
+            - ComienzoFin(numero de evento, que seria el que gane el reloj): Comienza el fin del evento ganador, debe borrar al
+            objeto temporal, revisar la cola por si hay otro objeto esperando y cambiar o no el estado del objeto permanente
+            
+
+             */
+
         }
 
         //Este genera una llegada, creando el timepo del evento
         public void GenerarLlegada(int i)
         {
-                Random random = new Random();
-
                 // Generar un número decimal aleatorio entre 0.01 y 0.99
                 double numeroDecimalAleatorio = random.NextDouble() * (0.99 - 0.01) + 0.01;
 
@@ -44,26 +59,24 @@ namespace TP3
         //Este va a comenzar cuando llegue el tiempo de la llamada
         public void ComienzaLlegada(int i)
         {
-            LlegadaEspecial();
+            ClienteTemporal clienteTemporal = LlegadaEspecial();
 
             //Si no hay llegada especial, el cliente se crea en este momento
             //De lo contrario, se crea en la llegada especial
             if (fila1.servicioAdicional[0].tomaServicio = false)
             {
-                ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0);
+                ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0, random.Next(1, 10000);
                 Cola(clienteTemporal, i);
             }
 
             //El fin de la llegada normal se realiza lo mismo
-            GenerarFin(int i);
+            GenerarFin(int i, ClienteTemporal clienteTemporal);
 
         }
 
         //Revisa si al comienzo el cliente quiere realizar el servicio especial o no
-        public void LlegadaEspecial()
+        public ClienteTemporal LlegadaEspecial()
         {
-                Random random = new Random();
-
                 // Generar un número decimal aleatorio entre 0.01 y 0.99
                 double numeroDecimalAleatorio = random.NextDouble() * (0.99 - 0.01) + 0.01;
 
@@ -76,9 +89,10 @@ namespace TP3
                 if (fila1.servicioAdicional[0].RND < 0.18)
                 {
                     fila1.servicioAdicional[0].tomaServicio = true;
-                    ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0);
+                    ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0, random.Next(1, 10000);
                     Cola(clienteTemporal, i);
-                GenerarFinServicioEspecial(ClienteTemporal clienteTemporal);
+                    GenerarFinServicioEspecial(ClienteTemporal clienteTemporal);
+                    return clienteTemporal;
                 }
                 else
                 {
@@ -97,9 +111,6 @@ namespace TP3
                     fila1.estadoClientes[index].estado = atendido;
                     fila1.estadoClientes[index].inicioAtencion = fila1.reloj;
                    
-
-                    Random random = new Random();
-
                     // Generar un número decimal aleatorio entre 0.01 y 0.99
                     double numeroDecimalAleatorio = random.NextDouble() * (0.99 - 0.01) + 0.01;
 
@@ -118,11 +129,16 @@ namespace TP3
 
         }
 
-        public void ComienzoFinEspecial()
+        public void FinEspecial()
         {
-            ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0);
+            ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0, random.Next(1, 10000));
             //Esta cola es especial para Servicios Adicionales
-            Cola(clienteTemporal, 6);
+
+            /************************************************************
+             
+             Es practicamente lo mismo que LlegadaEspecial, solo que ocurre mas adelante y que puede borrar el objeto una vez termina
+
+             ***************************************************************/
         }
 
         
@@ -154,10 +170,11 @@ namespace TP3
 
 
         //Aqui creamos al objeto temporal 
-        public ClienteTemporal SetObjetoTemporal(string estado, double inicioAtencion)
+        public ClienteTemporal SetObjetoTemporal(string estado, double inicioAtencion, int id)
         {
-            ClienteTemporal clienteTemporal = new ClienteTemporal(estado, inicioAtencion);
+            ClienteTemporal clienteTemporal = new ClienteTemporal(estado, inicioAtencion, id);
 
+            //Aprovechamos y la agregamos a la lista de objetos temporales
             fila1.estadoClientes.Add(clienteTemporal);
 
             return clienteTemporal;
@@ -196,6 +213,7 @@ namespace TP3
                     int index = fila1.estadoClientes.IndexOf(clienteTemporal);
                     fila1.estadoClientes[index].estado = clienteTemporal.estado;
                     fila1.estadoClientes[index].inicioAtencion = clienteTemporal.inicioAtencion;
+                    //No lo busco con el id del cliente temporal porque esta forma es mas rapida, ademas de que no cambia
 
                     Random random = new Random();
 
@@ -221,6 +239,29 @@ namespace TP3
         {
             //Va a buscar entre los clientes temporales aquel que pertenezca al fin que comienza
             fila1.estadoClientes.Remove(fila1.fin[i].clienteTemporal);
+
+            /*
+             
+            OJO! Aqui debe haber un condicional en caso de que el cliente quiera realizar el servicio adicional en la salida, por
+            lo que aun no terminaria el evento.
+             
+             */
+
+            //Esto es lo que ocurre con el resto de la fila, va a revisar la cola, remover el objeto, buscarlo con la id y 
+            //modificarlo en la lista de objetos temporales
+            if (fila1.cola[i].cantidad.Count != 0)
+            {
+                foreach(var cliente in fila1.estadoClientes)
+                {
+                    if(cliente.id == fila1.cola[i].cantidad[0].id)
+                    {
+                        cliente.estado = "Atendido";
+                        cliente.inicioAtencion = fila1.reloj;
+
+                        fila1.cola[i].cantidad.RemoveAt(0);
+                    }
+                }
+            }
 
             /***********************************************************************************
              
