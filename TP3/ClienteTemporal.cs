@@ -11,6 +11,16 @@ namespace TP3
         public string estado;
         public double inicioAtencion;
         public int id;
+        public int tipoServicio;
+
+        /*
+          0 - 
+          1 - 
+          2 - 
+          3 - 
+          4 - 
+          5 - 
+         */
         
         public ClienteTemporal(string estado, double inicioAtencion, int id)
         {

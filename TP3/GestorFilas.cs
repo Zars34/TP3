@@ -69,6 +69,8 @@ namespace TP3
         //Comienza la llamada cuando llega el evento, el parametro es el tipo de llamada
         public void ComienzaLlegada(int i)
         {
+
+            //Crear cliente antes; enviarlo a la llegadaEspecial
             ClienteTemporal clienteTemporal = LlegadaEspecial();
 
             //Si no hay llegada especial, el cliente se crea en este momento
@@ -113,45 +115,43 @@ namespace TP3
 
         public void GenerarFinServicioEspecial(ClienteTemporal clienteTemporal)
         {
-            for(int i = 0, i < fila1.fin[6].finAtencion.Count, i++)
+
+
+            // Generar un número decimal aleatorio entre 0.01 y 0.99
+            double numeroDecimalAleatorio = random.NextDouble() * (0.99 - 0.01) + 0.01;
+
+            // Redondear a dos decimales
+            numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
+
+            //El indice 6 indica que es un fin de ServicioAdicional
+            fila1.fin[6].RND = numeroDecimalAleatorio;
+            fila1.fin[6].tiempo = -fila1.fin[6].media * Math.Log(1 - numeroDecimalAleatorio);
+            fila1.fin[6].finAtencion = fila1.reloj + fila1.fin[6].tiempo;
+            
+
+        }
+
+        public void FinServicioEspecial(ClienteTemporal clienteTemporal)
+        {
+            for (int i = 0, i < fila1.fin[6].finAtencion.Count, i++)
             {
                 if (fila1.fin[6].finAtencion[i] == 0)
                 {
                     int index = fila1.estadoClientes.IndexOf(clienteTemporal);
                     fila1.estadoClientes[index].estado = atendido;
                     fila1.estadoClientes[index].inicioAtencion = fila1.reloj;
-                   
-                    // Generar un número decimal aleatorio entre 0.01 y 0.99
-                    double numeroDecimalAleatorio = random.NextDouble() * (0.99 - 0.01) + 0.01;
 
-                    // Redondear a dos decimales
-                    numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
 
-                    fila1.fin[6].RND = numeroDecimalAleatorio;
-                    fila1.fin[6].tiempo = -fila1.fin[i].media * Math.Log(1 - numeroDecimalAleatorio);
-                    fila1.fin[6].finAtencion = fila1.reloj + fila1.fin[6].tiempo;
                     fila1.fin[6].ACTiempoAtencion += fila1.fin[6].tiempo;
                     fila1.fin[6].PRCOcupacion = (fila1.fin[6].ACTiempoAtencion / fila1.reloj) * 100;
                 }
             }
-            
 
-
+            /****************************************************************************************
+             Este tiene que generar el fin normal de la llegada de la que proviene; para eso le va a enviar el 
+            cliente que ha usado hasta ahora, el cual contiene el tipo de llegada al que pertenece
+             *****************************************************************************************/
         }
-
-        public void FinEspecial()
-        {
-            ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0, random.Next(1, 10000));
-            //Esta cola es especial para Servicios Adicionales
-
-            /************************************************************
-             
-             Es practicamente lo mismo que LlegadaEspecial, solo que ocurre mas adelante y que puede borrar el objeto una vez termina
-
-             ***************************************************************/
-        }
-
-        
 
 
         //Revisa si al final el cliente quiere realizar el servicio especial o no
@@ -176,6 +176,12 @@ namespace TP3
             {
                 fila1.servicioAdicional[1].tomaServicio = false;
             }
+
+            /************************************************************
+             
+             Es practicamente lo mismo que LlegadaEspecial, solo que ocurre mas adelante y que puede borrar el objeto una vez termina
+
+             ***************************************************************/
         }
 
 
