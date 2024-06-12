@@ -13,6 +13,16 @@ namespace TP3
         public Fila fila2;
         public Random random;
 
+        /*
+         0 - Caja;
+         1 - AtencionPersonalizada;
+         2 - TarjetaCredito;
+         3 - PlazosFijos;
+         4 - Prestamos;
+         5 - Servicio especial (5 - LosQueLlegan
+                                6 - LosQueSeVan)
+         */
+
 
         public void Inicio()
         {
@@ -38,7 +48,7 @@ namespace TP3
 
         }
 
-        //Este genera una llegada, creando el timepo del evento
+        //Genera al llamada; el parametro indica el tipo de llamada
         public void GenerarLlegada(int i)
         {
                 // Generar un número decimal aleatorio entre 0.01 y 0.99
@@ -56,7 +66,7 @@ namespace TP3
 
         }
 
-        //Este va a comenzar cuando llegue el tiempo de la llamada
+        //Comienza la llamada cuando llega el evento, el parametro es el tipo de llamada
         public void ComienzaLlegada(int i)
         {
             ClienteTemporal clienteTemporal = LlegadaEspecial();
@@ -196,7 +206,7 @@ namespace TP3
             fila1.cola[i].PRCtiempoFuera = (fila1.cola[i].tiempoEspera / fila1.reloj) * 100;
         }
 
-
+        //Genera el fin, se le ingresa el tipo de fin y el clienteTemporal al que esta asignado
         public void GenerarFin(int i, ClienteTemporal clienteTemporal)
         {
             //Va a buscar si uno de los servicios esta desocupado
@@ -234,7 +244,7 @@ namespace TP3
 
         }
 
-        //Esta funcion determina el comienzo del evento fin
+        //Es el comienzo del fin, se le envia el tipo de fin
         public void ComienzaFin(int i)
         {
             //Va a buscar entre los clientes temporales aquel que pertenezca al fin que comienza
@@ -251,14 +261,25 @@ namespace TP3
             //modificarlo en la lista de objetos temporales
             if (fila1.cola[i].cantidad.Count != 0)
             {
+                //Revisa todos los clientes temporales
                 foreach(var cliente in fila1.estadoClientes)
                 {
+
+                    //Busca aquel cuyo id sea igual al del primero de la cola (el primero que entró)
                     if(cliente.id == fila1.cola[i].cantidad[0].id)
                     {
+                        //Cambia el estado del objeto temporal de "En espera" a "Atendido"
+                        //RECORDAR, EL OBJETO YA EXISTIA, SOLO ESTABA "En espera"
                         cliente.estado = "Atendido";
                         cliente.inicioAtencion = fila1.reloj;
 
+                        ClienteTemporal clienteCola = fila1.cola[i].cantidad[0];
+
+                        //Genero el nuevo fin del mismo tipo y con el ClienteTemporal de la cola
+                        GenerarFin(int i, clienteCola);
+
                         fila1.cola[i].cantidad.RemoveAt(0);
+                        return;
                     }
                 }
             }
