@@ -13,5 +13,7 @@ namespace TP3
         public double proxLlegada;
 
         public int media;
+
+        public ClienteTemporal clienteTemporal;
     }
 }

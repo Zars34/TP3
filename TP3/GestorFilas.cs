@@ -69,17 +69,15 @@ namespace TP3
         //Comienza la llamada cuando llega el evento, el parametro es el tipo de llamada
         public void ComienzaLlegada(int i)
         {
+            //El 0 indica que aun no ha sido atendido
+            ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0, random.Next(1, 10000);
 
             //Crear cliente antes; enviarlo a la llegadaEspecial
-            ClienteTemporal clienteTemporal = LlegadaEspecial();
+            LlegadaEspecial(clienteTemporal);
 
             //Si no hay llegada especial, el cliente se crea en este momento
             //De lo contrario, se crea en la llegada especial
-            if (fila1.servicioAdicional[0].tomaServicio = false)
-            {
-                ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0, random.Next(1, 10000);
-                Cola(clienteTemporal, i);
-            }
+            
 
             //El fin de la llegada normal se realiza lo mismo
             GenerarFin(int i, ClienteTemporal clienteTemporal);
@@ -87,7 +85,7 @@ namespace TP3
         }
 
         //Revisa si al comienzo el cliente quiere realizar el servicio especial o no
-        public ClienteTemporal LlegadaEspecial()
+        public void LlegadaEspecial(ClienteTemporal clienteTemporal)
         {
                 // Generar un número decimal aleatorio entre 0.01 y 0.99
                 double numeroDecimalAleatorio = random.NextDouble() * (0.99 - 0.01) + 0.01;
@@ -101,10 +99,8 @@ namespace TP3
                 if (fila1.servicioAdicional[0].RND < 0.18)
                 {
                     fila1.servicioAdicional[0].tomaServicio = true;
-                    ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0, random.Next(1, 10000);
-                    Cola(clienteTemporal, i);
                     GenerarFinServicioEspecial(ClienteTemporal clienteTemporal);
-                    return clienteTemporal;
+                    return;
                 }
                 else
                 {
@@ -186,9 +182,9 @@ namespace TP3
 
 
         //Aqui creamos al objeto temporal 
-        public ClienteTemporal SetObjetoTemporal(string estado, double inicioAtencion, int id)
+        public ClienteTemporal SetObjetoTemporal(string estado, double inicioAtencion, int id, int tipoServicio)
         {
-            ClienteTemporal clienteTemporal = new ClienteTemporal(estado, inicioAtencion, id);
+            ClienteTemporal clienteTemporal = new ClienteTemporal(estado, inicioAtencion, id, tipoServicio);
 
             //Aprovechamos y la agregamos a la lista de objetos temporales
             fila1.estadoClientes.Add(clienteTemporal);
@@ -196,17 +192,10 @@ namespace TP3
             return clienteTemporal;
          }
 
+        //Este metodo se hace para calcular el tiempo de espera y porcentaje de cada objeto temporal
+        //Se activa cada vez que un objeto egresa de la cola
         public void Cola(ClienteTemporal clienteTemporal, int i)
-        {
-            /*******************************************************************************************
-
-            El tiempo de espera solo se acumula cuando un objeto empieza a ser atendido
-            Quiero un metodo que remueva al clienteTemporal, pero que no afecte al codigo en caso de que la cola esté 
-            vacia, significando que clienteTemporal nunca estuvo en la cola
-
-            ******************************************************************************************/
-
-            
+        {   
             //En caso de que el objeto nunca haya formado aprte de la cola, entonces el resultado será 0
             fila1.cola[i].tiempoEspera += fila1.reloj - clienteTemporal.inicioAtencion;
             fila1.cola[i].PRCtiempoFuera = (fila1.cola[i].tiempoEspera / fila1.reloj) * 100;
@@ -248,23 +237,27 @@ namespace TP3
                 }
             }
 
+            //Si ninguno de los objetos permanentes esta disponible, entonces agrega al objeto temporal a la cola que le corresponde
+            fila1.cola[i].cantidad.Add(clienteTemporal);
         }
 
         //Es el comienzo del fin, se le envia el tipo de fin
         public void ComienzaFin(int i)
         {
+
+            /***********************************************************************************
+             
+             Aqui es donde se revisaria si el cliente quiere revisar el servicio adicional o no
+
+             ************************************************************************************/
+
+
             //Va a buscar entre los clientes temporales aquel que pertenezca al fin que comienza
             fila1.estadoClientes.Remove(fila1.fin[i].clienteTemporal);
 
-            /*
-             
-            OJO! Aqui debe haber un condicional en caso de que el cliente quiera realizar el servicio adicional en la salida, por
-            lo que aun no terminaria el evento.
-             
-             */
 
-            //Esto es lo que ocurre con el resto de la fila, va a revisar la cola, remover el objeto, buscarlo con la id y 
-            //modificarlo en la lista de objetos temporales
+
+            //Revisa si hay algun objeto temporal en la cola, para comenzar con su procesamiento
             if (fila1.cola[i].cantidad.Count != 0)
             {
                 //Revisa todos los clientes temporales
@@ -278,8 +271,10 @@ namespace TP3
                         //RECORDAR, EL OBJETO YA EXISTIA, SOLO ESTABA "En espera"
                         cliente.estado = "Atendido";
                         cliente.inicioAtencion = fila1.reloj;
-
+                        
                         ClienteTemporal clienteCola = fila1.cola[i].cantidad[0];
+
+                        Cola(clienteCola, i);
 
                         //Genero el nuevo fin del mismo tipo y con el ClienteTemporal de la cola
                         GenerarFin(int i, clienteCola);
@@ -290,11 +285,7 @@ namespace TP3
                 }
             }
 
-            /***********************************************************************************
-             
-             Aqui es donde se revisaria si el cliente quiere revisar el servicio adicional o no
-
-             ************************************************************************************/
+            
         }
 
 

@@ -22,11 +22,12 @@ namespace TP3
           5 - 
          */
         
-        public ClienteTemporal(string estado, double inicioAtencion, int id)
+        public ClienteTemporal(string estado, double inicioAtencion, int id, int tipoServicio)
         {
             this.estado = estado;   
             this.inicioAtencion = inicioAtencion;
             this.id = id;
+            this.tipoServicio = tipoServicio;
         }
     }
 }
