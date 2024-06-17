@@ -4,6 +4,28 @@ namespace TP3
     {
         public GestorFilas gestor;
 
+        Dictionary<int, string> llegadaMap = new Dictionary<int, string>
+        {
+            { 0, "LlegadaClienteCaja" },
+            { 1, "LlegadaClienteAtencionPersonalizada" },
+            { 2, "LlegadaClienteTarjetaCredito" },
+            { 3, "LlegadaClientePlazosFijos" },
+            { 4, "LlegadaClientePrestamos" }
+            { 5, "LlegadaClienteServicioEspecial" }
+
+        };
+
+        Dictionary<int, string> finMap = new Dictionary<int, string>
+        {
+            { 0, "FinCaja" },
+            { 1, "FinAtencionPersonalizada" },
+            { 2, "FinTarjetaCredito" },
+            { 3, "FinPlazoFijo" },
+            { 4, "FinPrestamos" }
+            { 5, "FinServicioEspecial" }
+
+        };
+
         public Form1()
         {
             InitializeComponent();
@@ -38,6 +60,7 @@ namespace TP3
                 
             }
 
+            //Dios, hay que refactorizar "fila1" en "GestorFilas" para llamarlo "Fila"
             gestor.fila1 = fila2;
             gestor.fila1.evento = proxEvento + " " + "[" + idEvento + "]";
             gestor.fila1.reloj = Math.Round(proxTiempo, 2);
@@ -115,8 +138,19 @@ namespace TP3
 
 
                 //Hasta acá la fila2 será casi una copia de la fila1; desde aquí en adelante se ejecutarán los eventos
-                
+                fila2.evento = proxEvento + " " + "[" + tipoEvento + "]";
+                fila2.reloj = Math.Round(proxTiempo, 2);
+
+                if(llegadaMap.TryGetValue(tipoEvento, out string value))
+                {
+                    gestor.ComienzaLlegada(tipoEvento);
+                } else
+                {
+
+                }
+
             }
+
 
             EventoCiclico(cantEventos--, desdeEsteEvento, fila2, fila1);
         }
