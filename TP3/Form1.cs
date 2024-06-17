@@ -86,6 +86,9 @@ namespace TP3
 
                 string proxEvento;
                 int tipoEvento;
+
+                //Esta variable se inicializará siempre como -1; su valor cambiará si el proximo evento es un Fin en vez de una Llegada
+                int servicioFin = -1;
                 double proxTiempo = 0;
 
                 //Todos los eventos llegada, usamos el for para analizarlos individualmente y determinar el siguiente evento
@@ -117,6 +120,7 @@ namespace TP3
                         {
                             proxTiempo = proxTiempo > fila1.fin[i].finAtencion[j];
                             tipoEvento = i;
+                            servicioFin = j;
                             proxEvento = fila1.fin[i].GetType().Name;
                         }
                     }
@@ -138,16 +142,18 @@ namespace TP3
 
 
                 //Hasta acá la fila2 será casi una copia de la fila1; desde aquí en adelante se ejecutarán los eventos
-                fila2.evento = proxEvento + " " + "[" + tipoEvento + "]";
                 fila2.reloj = Math.Round(proxTiempo, 2);
 
-                if(llegadaMap.TryGetValue(tipoEvento, out string value))
+                if (servicioFin = -1)
                 {
+                    fila2.evento = llegadaMap.TryGetValue(tipoEvento, out string value);
                     gestor.ComienzaLlegada(tipoEvento);
                 } else
                 {
-
+                    fila2.evento = finMap.TryGetValue(tipoEvento, out string value):
+                        gestor.ComienzaFin(tipoEvento, servicioFin);    
                 }
+                
 
             }
 

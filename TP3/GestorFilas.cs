@@ -56,12 +56,12 @@ namespace TP3
 
             if (clienteTemporal.tomaServicio == false)
             {
-                GenerarFin(int i, ClienteTemporal clienteTemporal);
+                GenerarFin(i, clienteTemporal);
                 
             }
 
             //Se genera una nueva llamada que reemplazará a la que ocurrió
-            GenerarLlegada(int i);
+            GenerarLlegada(i);
 
         }
 
