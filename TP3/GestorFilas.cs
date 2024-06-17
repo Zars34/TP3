@@ -22,31 +22,6 @@ namespace TP3
          5 - Servicio especial 
          */
 
-
-        public void Inicio()
-        {
-            fila1.Initialize();
-            fila1.evento = "Inicializar";
-            fila1.reloj = 0;
-
-
-            /*
-             Entonces, por cada fila el orden seria:
-
-            - GenerarLlegada(numero de evento): Genera una nueva llegada
-
-            - ComienzaLlegada(numero de evento, que seria el que gane el reloj): Revisa si realiza una llegada
-            especial; se genera el objeto sin importar, se realiza o no la llegada especial, luego pasa o vuelve a la llegada normal
-            que genera un fin
-
-            - ComienzoFin(numero de evento, que seria el que gane el reloj): Comienza el fin del evento ganador, debe borrar al
-            objeto temporal, revisar la cola por si hay otro objeto esperando y cambiar o no el estado del objeto permanente
-            
-
-             */
-
-        }
-
         //Genera al llamada; el parametro indica el tipo de llamada
         public void GenerarLlegada(int i)
         {

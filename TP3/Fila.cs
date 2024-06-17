@@ -69,6 +69,15 @@ namespace TP3
 
             estados = new List<List<string>>{estadoCajas,estadoAtencionPers,estadoTarjetaCredito,estadoPlazoFijo,estadoPrestamos,estadoServicioAdicional};
             
+            for(int i = 0; i < cola.Count; i++)
+            {
+                for(int j = 0; j < cola[i].Count; j++)
+                {
+                    cola[i][j] = 0;
+                }
+
+            }
+
             List<int> cantObjetos = new List<int>(){4, 3, 2, 1, 2, 2 };    
             for(int i = 0; i < estados.Count; i++)
             {
