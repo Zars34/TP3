@@ -9,8 +9,9 @@ namespace TP3
 {
     internal class GestorFilas
     {
+        //Por "fila1" se refiere a la fila que el gestor usará para realizar las funciones
+        //hay que refactorizar su nombre, tal vez a "fila"
         public Fila fila1;
-        public Fila fila2;
         public Random random;
 
         /*
@@ -223,6 +224,8 @@ namespace TP3
             //Va a buscar si uno de los servicios esta desocupado
             for(int j = 0; j < fila1.estados[i].Count; j++)
             {
+
+                //Si encuentra un objeto permanente que esta libre, le asigna el cliente temporal a ese final
                 if (fila1.estados[i][j] == "Libre")
                 {
                     fila1.estados[i][j] = "Ocupado";
@@ -252,6 +255,8 @@ namespace TP3
                     fila1.fin[i].PRCOcupacion = (fila1.fin[i].ACTiempoAtencion / fila1.reloj) * 100;
 
                     Cola(clienteTemporal);
+
+                    //Cuando ya asiga el objeto termporal al fin, deja de revisar los estados de los objetos permanentes
                     return;
                 }
             }
@@ -263,13 +268,8 @@ namespace TP3
         //Es el comienzo del fin, se le envia el tipo de fin y el numero del servidor (se puede sacar de la posicion
         //en la que se encontraba el tiempo del evento)
         public void ComienzaFin(int tipoFin, int servidorFin)
-        {
-
-            /***********************************************************************************
-             
-             Aqui es donde se revisaria si el cliente quiere revisar el servicio adicional o no
-
-             ************************************************************************************/
+        {             
+             //Aqui es donde se revisaria si el cliente quiere revisar el servicio adicional o no
             ClienteTemporal clienteTemporal = fila1.fin[tipoFin].clienteTemporal[servidorFin];
 
             if(clienteTemporal.yaEligio = false)
