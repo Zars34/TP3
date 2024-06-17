@@ -26,12 +26,12 @@ namespace TP3
         //Colas
         public List<Cola> cola;
 
-        public Cola paraCaja;
-        public Cola paraAtencionPers;
-        public Cola paraTarjetaCredito;
-        public Cola paraPlazosFijos;
-        public Cola paraPrestamos;
-        public Cola paraServAdicional;
+        /*0*/public Cola paraCaja;
+        /*1*/public Cola paraAtencionPers;
+        /*2*/public Cola paraTarjetaCredito;
+        /*3*/public Cola paraPlazosFijos;
+        /*4*/public Cola paraPrestamos;
+        /*5*/public Cola paraServAdicional;
 
         //Fin
         public List<Fin> fin;

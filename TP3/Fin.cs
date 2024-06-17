@@ -17,6 +17,6 @@ namespace TP3
         public List<double> finAtencion;
 
         public int media;
-        public ClienteTemporal clienteTemporal;
+        public List<ClienteTemporal> clienteTemporal;
     }
 }
