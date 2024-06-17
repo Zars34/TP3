@@ -43,6 +43,7 @@ namespace TP3
         //Comienza la llamada cuando llega el evento, el parametro es el tipo de llamada
         public void ComienzaLlegada(int i)
         {
+
             //El 0 indica que aun no ha sido atendido
             ClienteTemporal clienteTemporal = SetObjetoTemporal("En Espera", 0, random.Next(1, 10000), i, false, false);
 
@@ -55,7 +56,11 @@ namespace TP3
             if (clienteTemporal.tomaServicio == false)
             {
                 GenerarFin(int i, ClienteTemporal clienteTemporal);
+                
             }
+
+            //Se genera una nueva llamada que reemplazará a la que ocurrió
+            GenerarLlegada(int i);
 
         }
 

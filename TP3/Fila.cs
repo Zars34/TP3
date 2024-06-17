@@ -20,6 +20,7 @@ namespace TP3
         public Llegada clienteTarjetaCredito;
         public Llegada clientePlazosFijos;
         public Llegada clientePrestamos;
+        public Llegada clienteServicioEspecial;
         public ServicioAdicional paraLosQueLlegan;
         public ServicioAdicional paraLosQueSalen;
 
@@ -59,7 +60,7 @@ namespace TP3
 
         public void Initialize()
         {
-            llegada = new List<Llegada>{clienteCaja,clienteAtencionPersonalizada,clienteTarjetaCredito,clientePlazosFijos,clientePrestamos};
+            llegada = new List<Llegada>{clienteCaja,clienteAtencionPersonalizada,clienteTarjetaCredito,clientePlazosFijos,clientePrestamos,clienteServicioEspecial };
 
             servicioAdicional = new List<ServicioAdicional>{paraLosQueLlegan,paraLosQueSalen};
 
