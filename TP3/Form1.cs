@@ -26,9 +26,15 @@ namespace TP3
 
         };
 
+        public string proxEvento = "Inicializar";
+        public int idEvento = -1;
+        public double proxTiempo = 0;
+
         public Form1()
         {
             InitializeComponent();
+
+            gestor = new GestorFilas();
 
             int cantEventos = 1;
 
@@ -38,19 +44,25 @@ namespace TP3
             Fila fila2 = new Fila();
             fila2.Initialize();
 
+            
             gestor.fila1 = fila1;
-            gestor.fila1.evento = "Inicializar";
-            gestor.fila1.reloj = 0;
+            /*
+            fila1.evento = "Inicializar";
+            fila1.reloj = 0;
+            */
 
-            string proxEvento = "Inicializar";
-            int idEvento = -1;
-            double proxTiempo = 0;
+            for(int i = 0; i < fila1.llegada.Count; i++){
+                gestor.GenerarLlegada(i);
+            }
+
+            proxTiempo = fila1.llegada[0].proxLlegada;
 
             for(int i = 0; i < gestor.fila1.llegada.Count; i++)
             {
                 //Las primeras llamadas seran generadas manualmente; el resto se generarán automaticamente
                 //cuando comience un evento de llamada
-                gestor.GenerarLlegada(i);
+                
+
                 if(proxTiempo > gestor.fila1.llegada[i].proxLlegada)
                 {
                     proxTiempo = gestor.fila1.llegada[i].proxLlegada;
@@ -91,7 +103,8 @@ namespace TP3
 
                 //Esta variable se inicializará siempre como -1; su valor cambiará si el proximo evento es un Fin en vez de una Llegada
                 int servicioFin = -1;
-                double proxTiempo = 0;
+                double proxTiempo = fila1.llegada[0].proxLlegada;
+                
 
 
                 //Todos los eventos llegada, usamos el for para analizarlos individualmente y determinar el siguiente evento

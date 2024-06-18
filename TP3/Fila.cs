@@ -1,88 +1,91 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TP3
 {
     public class Fila
     {
-        public string evento;
-        public float reloj;
+        public string evento = "Inicializar";
+        public float reloj = 0;
 
-        //Llegadas
-        public List<Llegada> llegada = new List<Llegada>();
+        // Llegadas
+        public List<Llegada> llegada;
         public List<ServicioAdicional> servicioAdicional;
 
-        public Llegada clienteCaja;
-        public Llegada clienteAtencionPersonalizada;
-        public Llegada clienteTarjetaCredito;
-        public Llegada clientePlazosFijos;
-        public Llegada clientePrestamos;
-        public Llegada clienteServicioEspecial;
-        public ServicioAdicional paraLosQueLlegan;
-        public ServicioAdicional paraLosQueSalen;
+        public Llegada clienteCaja = new Llegada();
+        public Llegada clienteAtencionPersonalizada = new Llegada();
+        public Llegada clienteTarjetaCredito = new Llegada();
+        public Llegada clientePlazosFijos = new Llegada();
+        public Llegada clientePrestamos = new Llegada();
+        public Llegada clienteServicioEspecial = new Llegada();
+        public ServicioAdicional paraLosQueLlegan = new ServicioAdicional();
+        public ServicioAdicional paraLosQueSalen = new ServicioAdicional();
 
-        //Colas
+        // Colas
         public List<Cola> cola;
 
-        /*0*/public Cola paraCaja;
-        /*1*/public Cola paraAtencionPers;
-        /*2*/public Cola paraTarjetaCredito;
-        /*3*/public Cola paraPlazosFijos;
-        /*4*/public Cola paraPrestamos;
-        /*5*/public Cola paraServAdicional;
+        public Cola paraCaja = new Cola();
+        public Cola paraAtencionPers = new Cola();
+        public Cola paraTarjetaCredito = new Cola();
+        public Cola paraPlazosFijos = new Cola();
+        public Cola paraPrestamos = new Cola();
+        public Cola paraServAdicional = new Cola();
 
-        //Fin
+        // Fin
         public List<Fin> fin;
 
-        public Fin cajas;
-        public Fin atencionPersonalizada;
-        public Fin tarjetaCredito;
-        public Fin plazosFijos;
-        public Fin prestamos;
-        public Fin servAdicional;
+        public Fin cajas = new Fin();
+        public Fin atencionPersonalizada = new Fin();
+        public Fin tarjetaCredito = new Fin();
+        public Fin plazosFijos = new Fin();
+        public Fin prestamos = new Fin();
+        public Fin servAdicional = new Fin();
 
-        //Estados
+        // Estados
         public List<List<string>> estados;
 
-        public List<string> estadoCajas = new List<string> { "Libre", "Libre", "Libre", "Libre"};
-        public List<string> estadoAtencionPers = new List<string> { "Libre", "Libre", "Libre" };
-        public List<string> estadoTarjetaCredito = new List<string> { "Libre", "Libre" };
-        public List<string> estadoPlazoFijo = new List<string> { "Libre"};
-        public List<string> estadoPrestamos = new List<string> { "Libre", "Libre" };
-        public List<string> estadoServicioAdicional = new List<string> { "Libre", "Libre" };
+        public List<string> estadoCajas = new List<string>();
+        public List<string> estadoAtencionPers = new List<string>();
+        public List<string> estadoTarjetaCredito = new List<string>();
+        public List<string> estadoPlazoFijo = new List<string>();
+        public List<string> estadoPrestamos = new List<string>();
+        public List<string> estadoServicioAdicional = new List<string>();
 
-        //Objetos temporales
-        public List<ClienteTemporal> estadoClientes;
-
+        // Objetos temporales
+        public List<ClienteTemporal> estadoClientes = new List<ClienteTemporal>();
 
         public void Initialize()
         {
-            llegada = new List<Llegada>{clienteCaja,clienteAtencionPersonalizada,clienteTarjetaCredito,clientePlazosFijos,clientePrestamos,clienteServicioEspecial };
+            llegada = new List<Llegada> { clienteCaja, clienteAtencionPersonalizada, clienteTarjetaCredito, clientePlazosFijos, clientePrestamos, clienteServicioEspecial };
 
-            servicioAdicional = new List<ServicioAdicional>{paraLosQueLlegan,paraLosQueSalen};
+            servicioAdicional = new List<ServicioAdicional> { paraLosQueLlegan, paraLosQueSalen };
 
-            cola = new List<Cola>{paraCaja,paraAtencionPers,paraTarjetaCredito,paraPlazosFijos,paraPrestamos,paraServAdicional};
+            cola = new List<Cola> { paraCaja, paraAtencionPers, paraTarjetaCredito, paraPlazosFijos, paraPrestamos, paraServAdicional };
 
-            fin = new List<Fin>{cajas,atencionPersonalizada,tarjetaCredito,plazosFijos,prestamos,servAdicional};
+            fin = new List<Fin> { cajas, atencionPersonalizada, tarjetaCredito, plazosFijos, prestamos, servAdicional };
 
-            estados = new List<List<string>>{estadoCajas,estadoAtencionPers,estadoTarjetaCredito,estadoPlazoFijo,estadoPrestamos,estadoServicioAdicional};
+            estados = new List<List<string>> { estadoCajas, estadoAtencionPers, estadoTarjetaCredito, estadoPlazoFijo, estadoPrestamos, estadoServicioAdicional };
 
+            List<int> cantObjetos = new List<int> { 4, 3, 2, 1, 2, 2 };
+            for (int i = 0; i < estados.Count; i++)
+            {
+                for (int j = 0; j < cantObjetos[i]; j++)
+                {
+                    estados[i].Add("Libre");
+                }
+            }
 
-            List<int> mediasLlegada = new List<int>{2,5,10,15,6};
+            List<int> mediasLlegada = new List<int> { 2, 5, 10, 15, 6 };
             for (int i = 0; i < mediasLlegada.Count; i++)
             {
                 llegada[i].media = mediasLlegada[i];
             }
 
             List<int> mediasFin = new List<int> { 6, 12, 20, 30, 15, 3 };
-            for(int i = 0; i < mediasFin.Count; i++)
+            for (int i = 0; i < mediasFin.Count; i++)
             {
                 fin[i].media = mediasFin[i];
-            } 
-
+            }
         }
     }
 }

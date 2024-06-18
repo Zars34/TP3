@@ -12,7 +12,8 @@ namespace TP3
         //Por "fila1" se refiere a la fila que el gestor usará para realizar las funciones
         //hay que refactorizar su nombre, tal vez a "fila"
         public Fila fila1;
-        public Random random;
+        public Random random = new Random();
+        public double numeroDecimalAleatorio;
 
         /*
          0 - Caja;
@@ -27,7 +28,7 @@ namespace TP3
         public void GenerarLlegada(int i)
         {
                 // Generar un número decimal aleatorio entre 0.01 y 0.99
-                double numeroDecimalAleatorio = random.NextDouble() * (0.99 - 0.01) + 0.01;
+                numeroDecimalAleatorio = random.NextDouble();
 
                 // Redondear a dos decimales
                 numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
