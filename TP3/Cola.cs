@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP3
 {
-    internal class Cola
+    public class Cola
     {
         public List<ClienteTemporal> cantidad;
         public double tiempoEspera = 0;

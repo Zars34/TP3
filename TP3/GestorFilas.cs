@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace TP3
 {
-    internal class GestorFilas
+    public class GestorFilas
     {
         //Por "fila1" se refiere a la fila que el gestor usará para realizar las funciones
         //hay que refactorizar su nombre, tal vez a "fila"
@@ -80,7 +80,7 @@ namespace TP3
                 if (fila1.servicioAdicional[0].RND < 0.18)
                 {
                     clienteTemporal.tomaServicio = true;
-                    GenerarFinServicioEspecial(ClienteTemporal clienteTemporal);
+                    GenerarFinServicioEspecial(clienteTemporal);
                     return;
                 }
                 else
@@ -118,10 +118,10 @@ namespace TP3
                     numeroDecimalAleatorio = Math.Round(numeroDecimalAleatorio, 2);
 
                     fila1.fin[5].RND = numeroDecimalAleatorio;
-                    fila1.fin[5].tiempo = -fila1.fin[i].media * Math.Log(1 - numeroDecimalAleatorio);
-                    fila1.fin[5].finAtencion[j] = fila1.reloj + fila1.fin[i].tiempo;
-                    fila1.fin[5].ACTiempoAtencion += fila1.fin[i].tiempo;
-                    fila1.fin[5].PRCOcupacion = (fila1.fin[i].ACTiempoAtencion / fila1.reloj) * 100;
+                    fila1.fin[5].tiempo = -fila1.fin[5].media * Math.Log(1 - numeroDecimalAleatorio);
+                    fila1.fin[5].finAtencion[j] = fila1.reloj + fila1.fin[5].tiempo;
+                    fila1.fin[5].ACTiempoAtencion += fila1.fin[5].tiempo;
+                    fila1.fin[5].PRCOcupacion = (fila1.fin[5].ACTiempoAtencion / fila1.reloj) * 100;
 
                     Cola(clienteTemporal);
                     return;
@@ -186,7 +186,7 @@ namespace TP3
             if (fila1.servicioAdicional[1].RND < 0.33)
             {
                 clienteTemporal.tomaServicio = true;
-                GenerarFinServicioEspecial(ClienteTemporal clienteTemporal);
+                GenerarFinServicioEspecial(clienteTemporal);
                 return;
             }
             else
@@ -213,8 +213,8 @@ namespace TP3
         public void Cola(ClienteTemporal clienteTemporal)
         {   
             //En caso de que el objeto nunca haya formado aprte de la cola, entonces el resultado será 0
-            fila1.cola[i].tiempoEspera += fila1.reloj - clienteTemporal.inicioAtencion;
-            fila1.cola[i].PRCtiempoFuera = (fila1.cola[clienteTemporal.tipoServicio].tiempoEspera / fila1.reloj) * 100;
+            fila1.cola[clienteTemporal.tipoServicio].tiempoEspera += fila1.reloj - clienteTemporal.inicioAtencion;
+            fila1.cola[clienteTemporal.tipoServicio].PRCtiempoFuera = (fila1.cola[clienteTemporal.tipoServicio].tiempoEspera / fila1.reloj) * 100;
         }
 
         //Genera el fin, se le ingresa el tipo de fin y el clienteTemporal al que esta asignado
@@ -274,17 +274,17 @@ namespace TP3
 
             if(clienteTemporal.yaEligio = false)
             {
-                FinEspecial(ClienteTemporal clienteTemporal);
+                FinEspecial(clienteTemporal);
             }
 
             if (clienteTemporal.tomaServicio == false)
             {
                 //Va a buscar entre los clientes temporales aquel que pertenezca al fin que comienza
-                fila1.estadoClientes.Remove(fila1.fin[i].clienteTemporal[servidorFin]);
+                fila1.estadoClientes.Remove(fila1.fin[tipoFin].clienteTemporal[servidorFin]);
 
 
                 //Revisa si hay algun objeto temporal en la cola, para comenzar con su procesamiento
-                if (fila1.cola[i].cantidad.Count != 0)
+                if (fila1.cola[tipoFin].cantidad.Count != 0)
                 {
                     //Revisa todos los clientes temporales
                     foreach (var cliente in fila1.estadoClientes)
@@ -301,7 +301,7 @@ namespace TP3
                             ClienteTemporal clienteCola = fila1.cola[tipoFin].cantidad[0];
 
                             //Genero el nuevo fin del mismo tipo y con el ClienteTemporal de la cola
-                            GenerarFin(int i, clienteCola);
+                            GenerarFin(tipoFin, clienteCola);
 
                             fila1.cola[tipoFin].cantidad.RemoveAt(0);
                             return;

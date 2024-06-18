@@ -1,12 +1,83 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\franc\\source\\repos\\TP3\\TP3\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9E75BA08-1BDC-4E5A-8A06-C14E767A63B7}|TP3.csproj|c:\\users\\usuario\\desktop\\nacho\\utn\\sim\\trabajos practicos\\tp4\\tp4-repo\\tp3\\fila.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E75BA08-1BDC-4E5A-8A06-C14E767A63B7}|TP3.csproj|solutionrelative:fila.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E75BA08-1BDC-4E5A-8A06-C14E767A63B7}|TP3.csproj|c:\\users\\usuario\\desktop\\nacho\\utn\\sim\\trabajos practicos\\tp4\\tp4-repo\\tp3\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E75BA08-1BDC-4E5A-8A06-C14E767A63B7}|TP3.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9E75BA08-1BDC-4E5A-8A06-C14E767A63B7}|TP3.csproj|C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\gestorfilas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9E75BA08-1BDC-4E5A-8A06-C14E767A63B7}|TP3.csproj|solutionrelative:gestorfilas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Fila.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\Fila.cs",
+              "RelativeDocumentMoniker": "Fila.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\Fila.cs",
+              "RelativeToolTip": "Fila.cs",
+              "ViewState": "AQIAABoAAAAAAAAAAAAAAEkAAABBAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-18T00:20:35.644Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\Form1.cs",
+              "RelativeDocumentMoniker": "Form1.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\Form1.cs",
+              "RelativeToolTip": "Form1.cs",
+              "ViewState": "AQIAAHwAAAAAAAAAAAAAAE8AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-18T00:15:14.11Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "GestorFilas.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\GestorFilas.cs",
+              "RelativeDocumentMoniker": "GestorFilas.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\GestorFilas.cs",
+              "RelativeToolTip": "GestorFilas.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAADQBAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-17T23:02:29.467Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

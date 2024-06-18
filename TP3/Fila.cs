@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace TP3
 {
-    internal class Fila
+    public class Fila
     {
         public string evento;
         public float reloj;
 
         //Llegadas
-        public List<Llegada> llegada;
+        public List<Llegada> llegada = new List<Llegada>();
         public List<ServicioAdicional> servicioAdicional;
 
         public Llegada clienteCaja;
@@ -47,12 +47,12 @@ namespace TP3
         //Estados
         public List<List<string>> estados;
 
-        public List<string> estadoCajas;
-        public List<string> estadoAtencionPers;
-        public List<string> estadoTarjetaCredito;
-        public List<string> estadoPlazoFijo;
-        public List<string> estadoPrestamos;
-        public List<string> estadoServicioAdicional;
+        public List<string> estadoCajas = new List<string> { "Libre", "Libre", "Libre", "Libre"};
+        public List<string> estadoAtencionPers = new List<string> { "Libre", "Libre", "Libre" };
+        public List<string> estadoTarjetaCredito = new List<string> { "Libre", "Libre" };
+        public List<string> estadoPlazoFijo = new List<string> { "Libre"};
+        public List<string> estadoPrestamos = new List<string> { "Libre", "Libre" };
+        public List<string> estadoServicioAdicional = new List<string> { "Libre", "Libre" };
 
         //Objetos temporales
         public List<ClienteTemporal> estadoClientes;
@@ -69,24 +69,6 @@ namespace TP3
             fin = new List<Fin>{cajas,atencionPersonalizada,tarjetaCredito,plazosFijos,prestamos,servAdicional};
 
             estados = new List<List<string>>{estadoCajas,estadoAtencionPers,estadoTarjetaCredito,estadoPlazoFijo,estadoPrestamos,estadoServicioAdicional};
-            
-            for(int i = 0; i < cola.Count; i++)
-            {
-                for(int j = 0; j < cola[i].Count; j++)
-                {
-                    cola[i][j] = 0;
-                }
-
-            }
-
-            List<int> cantObjetos = new List<int>(){4, 3, 2, 1, 2, 2 };    
-            for(int i = 0; i < estados.Count; i++)
-            {
-                for(int j = 0; j < cantObjetos[i]; j++)
-                {
-                    estados[i].Add("Libre");
-                }
-            }
 
 
             List<int> mediasLlegada = new List<int>{2,5,10,15,6};
@@ -95,7 +77,7 @@ namespace TP3
                 llegada[i].media = mediasLlegada[i];
             }
 
-            List<int> mediasFin = new List<int> {6, 12, 20, 30, 15, 3}
+            List<int> mediasFin = new List<int> { 6, 12, 20, 30, 15, 3 };
             for(int i = 0; i < mediasFin.Count; i++)
             {
                 fin[i].media = mediasFin[i];

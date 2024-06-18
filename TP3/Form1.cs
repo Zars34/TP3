@@ -10,7 +10,7 @@ namespace TP3
             { 1, "LlegadaClienteAtencionPersonalizada" },
             { 2, "LlegadaClienteTarjetaCredito" },
             { 3, "LlegadaClientePlazosFijos" },
-            { 4, "LlegadaClientePrestamos" }
+            { 4, "LlegadaClientePrestamos" },
             { 5, "LlegadaClienteServicioEspecial" }
 
         };
@@ -21,7 +21,7 @@ namespace TP3
             { 1, "FinAtencionPersonalizada" },
             { 2, "FinTarjetaCredito" },
             { 3, "FinPlazoFijo" },
-            { 4, "FinPrestamos" }
+            { 4, "FinPrestamos" },
             { 5, "FinServicioEspecial" }
 
         };
@@ -42,8 +42,8 @@ namespace TP3
             gestor.fila1.evento = "Inicializar";
             gestor.fila1.reloj = 0;
 
-            string proxEvento;
-            int idEvento;
+            string proxEvento = "Inicializar";
+            int idEvento = -1;
             double proxTiempo = 0;
 
             for(int i = 0; i < gestor.fila1.llegada.Count; i++)
@@ -51,9 +51,9 @@ namespace TP3
                 //Las primeras llamadas seran generadas manualmente; el resto se generarán automaticamente
                 //cuando comience un evento de llamada
                 gestor.GenerarLlegada(i);
-                if(proxEvento > gestor.fila1.llegada[i].proxLlegada)
+                if(proxTiempo > gestor.fila1.llegada[i].proxLlegada)
                 {
-                    proxTiempo = proxTiempo > gestor.fila1.llegada[i].proxLlegada;
+                    proxTiempo = gestor.fila1.llegada[i].proxLlegada;
                     idEvento = i;
                     proxEvento = gestor.fila1.llegada[i].GetType().Name;
                 }
@@ -63,19 +63,21 @@ namespace TP3
             //Dios, hay que refactorizar "fila1" en "GestorFilas" para llamarlo "Fila"
             gestor.fila1 = fila2;
             gestor.fila1.evento = proxEvento + " " + "[" + idEvento + "]";
-            gestor.fila1.reloj = Math.Round(proxTiempo, 2);
+            gestor.fila1.reloj = (float)Math.Round(proxTiempo, 2);
 
-            gestor.ComienzaLlegada(idEvento, fila1, fila2);
+            gestor.ComienzaLlegada(idEvento);
 
 
             //Hasta acá todo se realizará igual cada vez que se inicie el programa
 
-            int cantEventos;
-            int desdeEsteEvento;
+            
+            int desdeEsteEvento = 0;
 
             List<Fila> filasMostradas;
 
-            EventoCiclico(cantEventos, desdeEsteEvento, gestor.fila1, gestor.fila2);
+            EventoCiclico(cantEventos, desdeEsteEvento, fila1, fila2);
+
+
         }
 
         public void EventoCiclico(int cantEventos, int desdeEsteEvento, Fila fila1, Fila fila2)
@@ -85,19 +87,20 @@ namespace TP3
                 gestor.fila1 = fila2;
 
                 string proxEvento;
-                int tipoEvento;
+                int tipoEvento = -1;
 
                 //Esta variable se inicializará siempre como -1; su valor cambiará si el proximo evento es un Fin en vez de una Llegada
                 int servicioFin = -1;
                 double proxTiempo = 0;
 
+
                 //Todos los eventos llegada, usamos el for para analizarlos individualmente y determinar el siguiente evento
                 for (int i = 0; i < fila1.llegada.Count; i++)
                 {
                     fila2.llegada[i] = fila1.llegada[i];
-                    if (proxEvento > fila1.llegada[i].proxLlegada)
+                    if (proxTiempo > fila1.llegada[i].proxLlegada)
                     {
-                        proxTiempo = proxTiempo > fila1.llegada[i].proxLlegada;
+                        proxTiempo = fila1.llegada[i].proxLlegada;
                         tipoEvento = i;
                         proxEvento = fila1.llegada[i].GetType().Name;
                     }
@@ -116,9 +119,9 @@ namespace TP3
 
                     for (int j = 0; j < fila1.estados[j].Count; j++)
                     {
-                        if (proxEvento > fila1.fin[i].finAtencion[j])
+                        if (proxTiempo > fila1.fin[i].finAtencion[j])
                         {
-                            proxTiempo = proxTiempo > fila1.fin[i].finAtencion[j];
+                            proxTiempo = fila1.fin[i].finAtencion[j];
                             tipoEvento = i;
                             servicioFin = j;
                             proxEvento = fila1.fin[i].GetType().Name;
@@ -133,7 +136,7 @@ namespace TP3
 
                 //Todos los estados de objetos permanentes, no hace falta revisarlos uno por uno pues le pasa la lista completa
 
-                fila2.estados[i] = fila1.estados[i];
+                fila2.estados = fila1.estados;
                 
 
                 //Todos los objetos temporales, no hace falta revisarlos uno por uno pues le pasa la lista completa
@@ -142,15 +145,17 @@ namespace TP3
 
 
                 //Hasta acá la fila2 será casi una copia de la fila1; desde aquí en adelante se ejecutarán los eventos
-                fila2.reloj = Math.Round(proxTiempo, 2);
+                fila2.reloj = (float)Math.Round(proxTiempo, 2);
 
-                if (servicioFin = -1)
+                if (servicioFin == -1)
                 {
-                    fila2.evento = llegadaMap.TryGetValue(tipoEvento, out string value);
+                    llegadaMap.TryGetValue(tipoEvento, out string value);
+                    fila2.evento = value;
                     gestor.ComienzaLlegada(tipoEvento);
                 } else
                 {
-                    fila2.evento = finMap.TryGetValue(tipoEvento, out string value):
+                    finMap.TryGetValue(tipoEvento, out string value);
+                    fila2.evento = value;
                         gestor.ComienzaFin(tipoEvento, servicioFin);    
                 }
                 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP3
 {
-    internal class Fin
+    public class Fin
     {
         public double RND;
         public double tiempo;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP3
 {
-    internal class ClienteTemporal
+    public class ClienteTemporal
     {
         public string estado;
         public double inicioAtencion;

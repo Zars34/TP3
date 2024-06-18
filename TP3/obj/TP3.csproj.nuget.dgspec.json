@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\franc\\Source\\Repos\\TP3\\TP3\\TP3.csproj": {}
+    "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\TP3.csproj": {}
   },
   "projects": {
-    "C:\\Users\\franc\\Source\\Repos\\TP3\\TP3\\TP3.csproj": {
+    "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\TP3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\franc\\Source\\Repos\\TP3\\TP3\\TP3.csproj",
+        "projectUniqueName": "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\TP3.csproj",
         "projectName": "TP3",
-        "projectPath": "C:\\Users\\franc\\Source\\Repos\\TP3\\TP3\\TP3.csproj",
-        "packagesPath": "C:\\Users\\franc\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\franc\\Source\\Repos\\TP3\\TP3\\obj\\",
+        "projectPath": "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\TP3.csproj",
+        "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Usuario\\Desktop\\NACHO\\UTN\\SIM\\Trabajos Practicos\\TP4\\TP4-REPO\\TP3\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\franc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -64,7 +63,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

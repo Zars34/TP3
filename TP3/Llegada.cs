@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP3
 {
-    internal class Llegada
+    public class Llegada
     {
         public double RND;
         public double tiempo;
